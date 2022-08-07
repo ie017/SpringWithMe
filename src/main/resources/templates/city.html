@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th= "http://www.thymeLeaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>City</title>
+</head>
+<body>
+   <div layout:fragment="pageContent">
+       <div class="container mt-5">
+           <div class="card mb-5">
+               <div class="container mt-0 w-50 p-3">
+                   <img class=" card-img-top" src="https://www.travelpack.com/public/imagedb/sysimgdocs/rszimages/Dunes-Kasbahs-Marrakesh_pk27152_1.gif"  width="20" height="200">
+               </div>
+               <div class="card-body">
+                   <h5 class="card-title text-center">City's morocco</h5>
+                   <form method="get" th:action="@{city}">
+                       <div class="form-group">
+                           <label>Name</label>
+                           <input type="text" name="Keyword" th:value="${Keyword}">
+                           <button class="btn btn-success">Search</button>
+                       </div>
+                   </form>
+                   <table class="table table-striped table-hover center">
+                       <thead>
+                       <tr>
+                           <th scope="col">Id</th>
+                           <th scope="col">City</th>
+                           <th scope="col">Region</th>
+                           <th scope="col">Country</th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       <tr th:each="p:${city}" >
+                           <td th:text="${p.id}"></td>
+                           <td th:text="${p.name}"></td>
+                           <td th:text="${p.region}"></td>
+                           <td th:text="${p.country}"></td>
+                           <td><a class="btn btn-danger" th:href="@{DeleteCity2(id=${p.id}, Keyword=${Keyword}, page=${currentPage}, size=${size})}">Delete</a></td>
+                       </tr>
+                       </tbody>
+                   </table>
+                   <ul class="nav nav-pills">
+                       <li th:each="page,status:${pages}">
+                           <a th:class="${status.index == currentPage?'btn btn-primary':'btn'}" th:href="@{city(page=${status.index}, Keyword=${Keyword}, size=${size})}" th:text="${status.index}"></a>
+                       </li>
+                   </ul>
+               </div>
+           </div>
+       </div>
+   </div>
+</body>
+</html>
