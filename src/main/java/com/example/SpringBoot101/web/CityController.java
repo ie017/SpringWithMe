@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.thymeleaf.model.IModel;
 
 
 import java.security.Key;
@@ -42,5 +43,15 @@ public class CityController {
     public String deleteCitySecond(Long id, String Keyword, int page, int size, Model model){
         cityRepository.deleteById(id);
         return "redirect:/city?page="+page+"&size="+size+"&Keyword="+Keyword;
+    }
+    @GetMapping(path = "/addCity")
+    public String addCity(Model model){
+        model.addAttribute("city",new City());
+        return("addCity");
+    }
+    @PostMapping(path = "/saveCity")
+    public String saveCity(City cityAdded){
+        cityRepository.save(cityAdded);
+        return "addCity";
     }
 }

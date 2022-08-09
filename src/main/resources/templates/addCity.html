@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th= "http://www.thymeLeaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter City</title>
+</head>
+<body>
+  <div layout:fragment="pageContent">
+    <div class="container">
+        <form th:action="@{saveCity}" method="post">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input type="text" name="name" class="form-control" th:value="${city.name}">
+                <span></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Region</label>
+                <input type="text" name="region" class="form-control" th:value="${city.region}">
+                <span></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Country</label>
+                <input type="text" name="country" class="form-control" th:value="${city.country}">
+                <span></span>
+            </div>
+            <button class="btn btn-success" type="submit">Save</button>
+        </form>
+    </div>
+  </div>
+</body>
+</html>
