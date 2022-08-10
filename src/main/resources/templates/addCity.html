@@ -8,25 +8,38 @@
 </head>
 <body>
   <div layout:fragment="pageContent">
-    <div class="container">
-        <form th:action="@{saveCity}" method="post">
-            <div class="form-group">
-                <label class="control-label">Name</label>
-                <input type="text" name="name" class="form-control" th:value="${city.name}">
-                <span></span>
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-header" th:if="${mode=='new'}">Form for new insert</div>
+            <div class="card-header" th:if="${mode=='edit'}"> Form for edit</div>
+            <div class="card-body">
+                <form th:action="@{saveCity}" method="post">
+                    <div class="form-group">
+                        <label class="control-label">Id :</label>
+                        <label class="control-label" th:if="${city.id == 0}" th:text="${null}"></label>
+                        <label class="control-label" th:if="${city.id != 0}" th:text="${city.id}"></label>
+                        <input type="hidden" class="form-control" th:if="${city.id != 0}" name="id" th:value="${city.id}">
+                        <span></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Name :</label>
+                        <input type="text" name="name" class="form-control" th:value="${city.name}">
+                        <span></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Region :</label>
+                        <input type="text" name="region" class="form-control" th:value="${city.region}">
+                        <span></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Country :</label>
+                        <input type="text" name="country" class="form-control" th:value="${city.country}">
+                        <span></span>
+                    </div>
+                    <button class="btn btn-success" type="submit">Save</button>
+                </form>
             </div>
-            <div class="form-group">
-                <label class="control-label">Region</label>
-                <input type="text" name="region" class="form-control" th:value="${city.region}">
-                <span></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Country</label>
-                <input type="text" name="country" class="form-control" th:value="${city.country}">
-                <span></span>
-            </div>
-            <button class="btn btn-success" type="submit">Save</button>
-        </form>
+        </div>
     </div>
   </div>
 </body>

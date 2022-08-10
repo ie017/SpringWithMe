@@ -58,6 +58,22 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.0.12.Final</version>
 		</dependency>
+		<!-- Pour Spring Security-->
+		<!-- Une fois on configurer spring security notre application est securisée
+		 par defaut et notre application donne une mot de passe pour accée a l'interieur de notre application-->
+		<!-- Generalement spring install un filtre qui pose un systeme d'autonthification par defaut pour generer toutes les requets-->
+		<!--Dans la suite on va commencer par la conf de notre securité dans un package security-->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>nz.net.ultraq.thymeleaf</groupId>
 			<artifactId>thymeleaf-layout-dialect</artifactId>

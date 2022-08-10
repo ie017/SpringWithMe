@@ -41,6 +41,7 @@
                                        <td th:text="${p.region}"></td>
                                        <td th:text="${p.country}"></td>
                                        <td><a class="btn btn-danger" th:href="@{DeleteCity2(id=${p.id}, Keyword=${Keyword}, page=${currentPage}, size=${size})}">Delete</a></td>
+                                       <td><a class="btn btn-success" th:href="@{editCity(id=${p.id})}">Edit</a></td>
                                    </tr>
                                    </tbody>
                                </table>
