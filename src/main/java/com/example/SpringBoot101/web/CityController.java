@@ -17,7 +17,7 @@ import java.util.List;
 
 @Controller
 public class CityController {
-    @Autowired
+    @Autowired // Pour dire a Spring boot utilisée le seul element CityRepository qui se trouve dans l'app
     private CityRepository cityRepository;
     @GetMapping(path = "/city")
     public String getCity(Model model,
