@@ -41,8 +41,8 @@
                                        <td th:text="${p.name}"></td>
                                        <td th:text="${p.region}"></td>
                                        <td th:text="${p.country}"></td>
-                                       <td><a class="btn btn-danger" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{DeleteCity2(id=${p.id}, Keyword=${Keyword}, page=${currentPage}, size=${size})}">Delete</a></td>
-                                       <td><a class="btn btn-success" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{editCity(id=${p.id})}">Edit</a></td>
+                                       <td><a class="btn btn-danger" sec:authorize="hasAuthority('ADMIN')" th:href="@{DeleteCity2(id=${p.id}, Keyword=${Keyword}, page=${currentPage}, size=${size})}">Delete</a></td>
+                                       <td><a class="btn btn-success" sec:authorize="hasAuthority('ADMIN')" th:href="@{editCity(id=${p.id})}">Edit</a></td>
                                    </tr>
                                    </tbody>
                                </table>

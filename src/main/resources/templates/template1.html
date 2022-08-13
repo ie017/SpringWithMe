@@ -29,7 +29,7 @@
                             City
                         </a>
                         <div class="dropdown-menu" >
-                            <a class="dropdown-item" sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{addCity}">Ajouter</a>
+                            <a class="dropdown-item" sec:authorize="hasAuthority('ADMIN')" th:href="@{addCity}">Ajouter</a>
                             <a class="dropdown-item" href="#">Review</a>
                         </div>
                     </li>

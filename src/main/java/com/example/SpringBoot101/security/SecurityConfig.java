@@ -1,5 +1,6 @@
 package com.example.SpringBoot101.security;
 
+import com.example.SpringBoot101.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,10 +16,14 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         // Methode qui permet de configurér les users.
-        PasswordEncoder passwordEncoder = passwordEncoder();
+        /*PasswordEncoder passwordEncoder = passwordEncoder();
         System.out.println("*************************************");
         System.out.println(passwordEncoder.encode("1234")); // Pour afichée l'encodage de 1234 qui varie
         // a chaque fois qaund on executée le programe (et ça c'est le point fort de BCrypte Algo)
@@ -37,7 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .authoritiesByUsernameQuery("Select username as principal, role as role from users_roles where username=?")
         // as role pour spring boot identifie un element dans la table comme role
                 .passwordEncoder(passwordEncoder) // Pour l'encoder a BCrypte remarque dans la base de données on a utilisée MD5 mais je le remplacer par BCrypte
-                .rolePrefix("ROLE_");// pour ajouter un prefix a role like ROLE_ADMIN.
+                .rolePrefix("ROLE_");// pour ajouter un prefix a role like ROLE_ADMIN.      */
+        // Il y'a un autre moyenne qui etait mieux pour notre travail : userdDetailsServices
+        // l'approche de cette moyenne est de gerer les users et les roles dans notre code c'est a dire creer des classes et tout ça.
+        auth.userDetailsService(userDetailsService);
     }
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -47,9 +55,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //Vous ne devez pas appeler super.configure(http) car vous souhaitez utiliser une configuration de sécurité personnalisée.
         //L'erreur est due au fait que la méthode parent configure(http) appelle déjà .authorizeRequests().anyRequest().authenticated()
         // et comme le mentionne le message d'erreur, Generalement la configuration de sécurité personnalisée doit etre declarée premierement.
-        http.authorizeRequests().antMatchers("/add**/**","/Delete**/**","/edit**/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/city").hasRole("USER");
-        http.authorizeRequests().antMatchers("/login", "/webjars/**").permitAll();
+        http.authorizeRequests().antMatchers("/add**/**","/Delete**/**","/edit**/**").hasAuthority("ADMIN");
+        http.authorizeRequests().antMatchers("/city").hasAuthority("USER");
+        http.authorizeRequests().antMatchers("/login", "/webjars/**").permitAll(); // autorisée l'accée a les resources webjars
+        // pour avoir l'effet de bootstrap dans notre app, aussi autorisée l'accée aux lien /login
         //http.httpBasic(); formulaire de login js
         http.authorizeRequests().anyRequest().authenticated(); // C'est a dire on configurer notre spring security
         // pour doit etre un authentification pour toutes les requetes mais SS ne sait comment cette operation
@@ -64,9 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // http.csrf().disable();
 
         http.exceptionHandling().accessDeniedPage("/notAutorized");
+        /*Pour avoir la bonne fonctionement des notre lien il faut changer hasRole dans notre code(files java and html) par hasAuthority*/
     }
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+
 }
